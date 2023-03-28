@@ -14,6 +14,33 @@ const createSurvey = async (surveyData, token) => {
 
   return response.data
 }
+
+// Update a survey
+const updateSurvey = async ({ id, surveyData }, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.put(API_URL + `/${id}`, surveyData, config)
+
+  return response.data
+}
+
+// Delete a survey
+const deleteSurvey = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.delete(API_URL + `/${id}`, config)
+
+  return response.data
+}
+
 // Get user surveys
 const getUserSurveys = async (id, token) => {
   const config = {
@@ -44,7 +71,9 @@ const getAllSurveys = async (token) => {
 const surveyService = {
   createSurvey,
   getUserSurveys,
-  getAllSurveys
+  getAllSurveys,
+  updateSurvey,
+  deleteSurvey
 }
 
 export default surveyService

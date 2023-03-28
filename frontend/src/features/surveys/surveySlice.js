@@ -30,6 +30,48 @@ export const createSurvey = createAsyncThunk(
   }
 )
 
+// Update a survey
+export const updateSurvey = createAsyncThunk(
+  "surveys/update",
+  async (surveyData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.updateSurvey(surveyData, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.string()
+
+      return thunkAPI.rejectWithValue(message)
+
+    }
+  }
+)
+
+// Delete a survey
+export const deleteSurvey = createAsyncThunk(
+  "surveys/delete",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.deleteSurvey(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.string()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+
 // Get user surveys
 export const getUserSurveys = createAsyncThunk(
   "surveys/getUserSurveys",
@@ -69,8 +111,6 @@ export const getAllSurveys = createAsyncThunk(
     }
   }
 )
-
-
 
 export const surveySlice = createSlice({
   name: "survey",
@@ -121,7 +161,32 @@ export const surveySlice = createSlice({
         state.isError = true;
         state.message = payload;
       })
-
+      .addCase(updateSurvey.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateSurvey.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(updateSurvey.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = payload;
+      })
+      .addCase(deleteSurvey.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteSurvey.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(deleteSurvey.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = payload;
+      })
   }
 });
 
