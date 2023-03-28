@@ -1,52 +1,49 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import { useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { getUserSurveys, reset } from "../features/surveys/surveySlice"
 
 import AddIcon from "@mui/icons-material/Add"
 import TextField from "@mui/material/TextField"
 
+import Spinner from "../components/Spinner"
+import SurveyCard from "../components/SurveyCard"
+
 function MySurveys() {
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
-	return (
-		<div className='w-screen h-screen flex justify-center items-start'>
-			<div className='w-4/5 '>
-				<h1 className='font-bold text-3xl text-center'>Anketlerim</h1>
-				<hr className='border-2 border-black' />
+	const { user } = useSelector((state) => state.auth)
 
-				<div className='flex flex-col justify-center items-center'>
-					<h1 className='m-2'>Anketlerinizi buradan yönetebilirsiniz.</h1>
+	const { surveys, isLoading, isSuccess } = useSelector((state) => state.survey)
 
-					<div className='flex flex-wrap justify-center items-center'>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>İlk Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
-						</div>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>iknici Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
-						</div>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>iknici Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
-						</div>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>iknici Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
-						</div>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>iknici Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
-						</div>
-						<div className='w-64 h-24 border-4 border-black rounded-lg p-3 m-3 transition ease-in-out delay-150 hover:scale-105 duration-300 cursor-pointer'>
-							<h1 className='font-bold text-xl text-center'>iknici Anketim</h1>
-							<p className='text-center'>Çevre Kirliliği</p>
+	useEffect(() => {
+		dispatch(getUserSurveys(user.id))
+	}, [dispatch])
+
+	if (isLoading) {
+		return <Spinner />
+	} else {
+		return (
+			<div className='w-screen h-screen flex justify-center items-start'>
+				<div className='w-4/5 '>
+					<h1 className='font-bold text-3xl text-center'>Anketlerim</h1>
+					<hr className='border-2 border-black' />
+
+					<div className='flex flex-col justify-center items-center'>
+						<h1 className='m-2'>Anketlerinizi buradan yönetebilirsiniz.</h1>
+
+						<div className='flex flex-wrap justify-center items-center'>
+							{surveys.map((survey) => (
+								<SurveyCard key={survey.id} survey={survey} />
+							))}
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
 export default MySurveys

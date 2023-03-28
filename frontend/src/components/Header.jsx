@@ -16,6 +16,11 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemText from "@mui/material/ListItemText"
+import { MenuItem } from "@mui/material"
+
+import { Link, useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from "react-redux"
+import { logout, reset } from "../features/auth/authSlice"
 
 const drawerWidth = 240
 
@@ -75,6 +80,18 @@ function Header() {
 	const handleDrawerClose = () => {
 		setOpen(false)
 	}
+
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
+
+	const { user } = useSelector((state) => state.auth)
+
+	const onLogout = () => {
+		dispatch(logout())
+		dispatch(reset())
+		navigate("/login")
+	}
+
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
@@ -116,26 +133,66 @@ function Header() {
 				</DrawerHeader>
 				<Divider />
 				<List>
-					{["Tüm Anketler", "Yeni Anket Oluştur"].map((text, index) => (
-						<ListItem key={text} disablePadding>
-							<ListItemButton>
-								<ListItemText primary={text} />
-							</ListItemButton>
-						</ListItem>
-					))}
+					<ListItem disablePadding>
+						<ListItemButton
+							onClick={() => {
+								navigate("/")
+							}}>
+							<ListItemText primary='Tüm Anketler' />
+						</ListItemButton>
+					</ListItem>
 				</List>
 				<Divider />
-				<List>
-					{["Oluşturduğum Anketler", "Cevapladığım Anketler", "Çıkış Yap"].map(
-						(text, index) => (
-							<ListItem key={text} disablePadding>
-								<ListItemButton>
-									<ListItemText primary={text} />
-								</ListItemButton>
-							</ListItem>
-						)
-					)}
-				</List>
+				{user ? (
+					<List>
+						<ListItem disablePadding>
+							<ListItemButton
+								onClick={() => {
+									navigate("/new-survey")
+								}}>
+								<ListItemText primary='Yeni Anket Oluştur' />
+							</ListItemButton>
+						</ListItem>
+						<ListItem disablePadding>
+							<ListItemButton
+								onClick={() => {
+									navigate("/my-surveys")
+								}}>
+								<ListItemText primary='Oluşturduğum Anketler' />
+							</ListItemButton>
+						</ListItem>
+						<ListItem disablePadding>
+							<ListItemButton>
+								<ListItemText primary='Cevapladığım Anketler' />
+							</ListItemButton>
+						</ListItem>
+						<ListItem disablePadding>
+							<ListItemButton onClick={onLogout}>
+								<ListItemText primary='Çıkış Yap' />
+							</ListItemButton>
+						</ListItem>
+					</List>
+				) : (
+					<List>
+						<ListItem disablePadding>
+							<ListItemButton
+								onClick={() => {
+									navigate("/login")
+								}}>
+								<ListItemText primary='Hesabına Giriş Yap' />
+							</ListItemButton>
+						</ListItem>
+
+						<ListItem disablePadding>
+							<ListItemButton
+								onClick={() => {
+									navigate("/register")
+								}}>
+								<ListItemText primary='Hesap Oluştur' />
+							</ListItemButton>
+						</ListItem>
+					</List>
+				)}
 			</Drawer>
 			<Main open={open}>
 				<DrawerHeader />

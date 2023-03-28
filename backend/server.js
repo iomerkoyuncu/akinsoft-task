@@ -16,7 +16,8 @@ app.get("/", (req, res) => {
 
 //Routes
 app.use("/api/users", require("./routes/userRoutes"))
-
+app.use("/api/surveys", require("./routes/surveyRoutes"))
+app.use("/api/questions", require("./routes/questionRoutes"))
 
 app.use(errorHandler)
 

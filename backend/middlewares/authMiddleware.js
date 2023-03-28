@@ -12,14 +12,9 @@ const protect = asyncHandler(async (req, res, next) => {
       // Get token from header
       token = req.headers.authorization.split(" ")[1]
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      // Get user from token
-      req.user = await User.findById(decoded.id).select("-password")
-      // check if a user was found
-      if (!req.user) {
-        res.status(401)
-        throw new Error("Not authirised")
-      }
+      const verify = jwt.verify(token, process.env.JWT_SECRET)
+
+      req.user = verify.user;
 
       next()
     } catch (error) {

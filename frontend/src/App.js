@@ -1,31 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
-import Header from "./components/Header"
-import Footer from "./components/Footer"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Home from "./pages/Home"
-import CreateNewSurvey from './pages/CreateNewSurvey';
-import MySurveys from './pages/MySurveys';
-import Survey from './pages/Survey';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Main from './components/Main';
+
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
   return (
     <>
       <Router>
-        <Header />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/new-survey' element={<CreateNewSurvey />} />
-          <Route path='/my-surveys' element={<MySurveys />} />
-          <Route path='/survey' element={<Survey />} />
-        </Routes>
-        <Footer />
+        <div className='flex flex-col justify-between h-screen'>
+          <Header />
+          <Main />
+          <Footer />
+        </div>
       </Router>
+      <ToastContainer />
     </>
 
   );
