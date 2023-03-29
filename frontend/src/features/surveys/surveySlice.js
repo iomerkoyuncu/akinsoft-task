@@ -112,6 +112,28 @@ export const getAllSurveys = createAsyncThunk(
   }
 )
 
+// Get survey by id
+export const getSurveyById = createAsyncThunk(
+  "surveys/getSurveyById",
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await surveyService.getSurveyById(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.string()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+
+
 export const surveySlice = createSlice({
   name: "survey",
   initialState,
@@ -182,6 +204,20 @@ export const surveySlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(deleteSurvey.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = payload;
+      })
+      .addCase(getSurveyById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSurveyById.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.survey = payload;
+      })
+      .addCase(getSurveyById.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

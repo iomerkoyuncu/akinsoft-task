@@ -67,13 +67,28 @@ const getAllSurveys = async (token) => {
   return response.data
 }
 
+// Get survey by id
+const getSurveyById = async (id, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL + `/${id}`, config)
+
+  return response.data
+}
+
+
 
 const surveyService = {
   createSurvey,
   getUserSurveys,
   getAllSurveys,
   updateSurvey,
-  deleteSurvey
+  deleteSurvey,
+  getSurveyById
 }
 
 export default surveyService

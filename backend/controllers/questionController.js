@@ -45,10 +45,10 @@ const getQuestionsBySurveyId = asyncHandler(async (req, res) => {
 //@route 	POST /api/questions
 //@access Private
 const createQuestion = asyncHandler(async (req, res) => {
-  const { question, answer, survey_id } = req.body;
+  const { question, survey_id } = req.body;
   const newQuestion = await pool.query(
-    'INSERT INTO questions (question, answer, survey_id) VALUES ($1, $2, $3) RETURNING *',
-    [question, answer, survey_id]
+    'INSERT INTO questions (question, survey_id) VALUES ($1, $2) RETURNING *',
+    [question, survey_id]
   );
   res.json(newQuestion.rows[0]);
 });
@@ -57,13 +57,13 @@ const createQuestion = asyncHandler(async (req, res) => {
 //@route 	PUT /api/questions/:id
 //@access Private
 const updateQuestion = asyncHandler(async (req, res) => {
-  const { updatedQuestion } = req.body;
-  const question = await pool.query(
+  const { question } = req.body;
+  const updatedQuestion = await pool.query(
     'UPDATE questions SET question = $1 WHERE question_id = $2 RETURNING *',
-    [updatedQuestion, req.params.id]
+    [question, req.params.id]
   );
-  if (question.rows.length > 0) {
-    res.json(question.rows[0]);
+  if (updatedQuestion.rows.length > 0) {
+    res.json(updatedQuestion.rows[0]);
   } else {
     res.status(404);
     throw new Error('Question not found');

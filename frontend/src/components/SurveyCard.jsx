@@ -35,7 +35,7 @@ function SurveyCard({ survey }) {
       </p>
       <div className="flex justify-end items-center">
         {pathMatchRoute('/') ? (
-          <button>
+          <button onClick={() => navigate(`/survey/${survey.survey_id}`)}>
             <h4 className="text-white bg-black rounded-md p-2 ">Cevapla</h4>
           </button>
         ) : (
