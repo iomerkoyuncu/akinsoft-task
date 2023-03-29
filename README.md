@@ -14,3 +14,4 @@
 - Redux
 - Node
 - Tailwind CSS
+- Material UI

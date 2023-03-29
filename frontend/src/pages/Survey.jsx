@@ -25,6 +25,10 @@ function Survey() {
     dispatch(getSurveyById(params.id))
   }, [dispatch])
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+  }
+
   return (
     <div className="w-screen h-screen flex justify-center items-start">
       <div className="w-4/5 ">
@@ -35,17 +39,26 @@ function Survey() {
         <hr className="border-2 border-black" />
 
         <div className="flex flex-col justify-center items-center">
-          {questions.map((question) => (
-            <QuestionCard question={question} />
-          ))}
-        </div>
-
-        <hr className="border-2 border-black" />
-
-        <div className="flex justify-end">
-          <button className="flex justify-between items-center m-2 px-2 mx-2 text-white bg-black rounded-md transition ease-in-out delay-150 hover:scale-110 duration-300 cursor-pointer">
-            <h4 className="p-2 ">Cevapları Kaydet</h4>
-          </button>
+          <form>
+            {questions.map((question) => (
+              <QuestionCard question={question} />
+            ))}
+            <hr className="border-2 border-black" />
+            {questions.length > 0 ? (
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="flex justify-between items-center m-2 px-2 mx-2 text-white bg-black rounded-md transition ease-in-out delay-150 hover:scale-110 duration-300 cursor-pointer"
+                >
+                  <h4 className="p-2 ">Cevapları Kaydet</h4>
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-center items-center">
+                <h1 className="font-bold text-xl ">Henüz Soru eklenmemiş.</h1>
+              </div>
+            )}
+          </form>
         </div>
       </div>
     </div>
