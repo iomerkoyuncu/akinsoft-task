@@ -1,4 +1,4 @@
-# Anket Yönetim Sistemi - AKINROBOTICS Task
+# Anket Yönetim Sistemi
 
 - npm i
 - cd frontend
