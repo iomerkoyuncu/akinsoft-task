@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/surveys"
+const API_URL = "https://anket-yonetim-sistemi.onrender.com/api/surveys"
 
 // Create a new survey
 const createSurvey = async (surveyData, token) => {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/questions"
+const API_URL = "https://anket-yonetim-sistemi.onrender.com/api/questions"
 
 // Create a new question
 const createQuestion = async (questionData, token) => {

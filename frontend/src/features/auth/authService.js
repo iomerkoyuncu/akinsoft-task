@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:3001/api/users"
+const API_URL = "https://anket-yonetim-sistemi.onrender.com/api/users"
 
 // Register user
 const register = async (userData) => {
