@@ -22,7 +22,7 @@ function Survey() {
   useEffect(() => {
     dispatch(getQuestionsBySurveyId(params.id))
     dispatch(getSurveyById(params.id))
-  }, [dispatch])
+  }, [dispatch, isSuccess, params.id])
 
   const filteredAnswers = removeDuplicatesByKey([...surveyAnswers], 'question_id')
 
@@ -33,10 +33,8 @@ function Survey() {
       dispatch(postAnswer(answer))
     })
 
-    if (isSuccess) {
-      dispatch(reset())
-      navigate('/')
-    }
+    dispatch(reset())
+    navigate('/')
   }
 
   function removeDuplicatesByKey(arr, key) {
