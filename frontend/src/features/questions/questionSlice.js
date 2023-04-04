@@ -3,6 +3,7 @@ import questionService from "./questionService";
 
 const initialState = {
   questions: [],
+  question: {},
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -28,6 +29,27 @@ export const createQuestion = createAsyncThunk(
     }
   }
 );
+
+// Get question by id
+export const getQuestionById = createAsyncThunk(
+  "question/getQuestionById",
+  async (questionId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token;
+      return await questionService.getQuestionById(questionId, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.string()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+);
+
 
 // Get all questions by survey id
 export const getQuestionsBySurveyId = createAsyncThunk(
@@ -145,6 +167,20 @@ export const surveySlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(deleteQuestion.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = payload;
+      })
+      .addCase(getQuestionById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getQuestionById.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.question = payload;
+      })
+      .addCase(getQuestionById.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isSuccess = false;
         state.isError = true;

@@ -15,6 +15,19 @@ const createQuestion = async (questionData, token) => {
   return response.data
 }
 
+// Get question by id
+const getQuestionById = async (questionId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const response = await axios.get(API_URL + `/${questionId}`, config)
+
+  return response.data
+}
+
 // Get all questions by survey id
 const getQuestionsBySurveyId = async (surveyId, token) => {
   const config = {
@@ -58,6 +71,7 @@ const deleteQuestion = async (questionId, token) => {
 const surveyService = {
   createQuestion,
   getQuestionsBySurveyId,
+  getQuestionById,
   updateQuestion,
   deleteQuestion
 }

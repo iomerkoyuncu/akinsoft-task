@@ -17,7 +17,7 @@ function EditSurvey() {
 
   const { user } = useSelector((state) => state.auth)
   const { surveys } = useSelector((state) => state.survey)
-  const { questions, isError, message, isSuccess } = useSelector((state) => state.question)
+  const { questions, isError, message, isSuccess, isLoading } = useSelector((state) => state.question)
 
   const existingSurvey = surveys.find((survey) => survey.survey_id === Number(params.id))
 
@@ -65,7 +65,7 @@ function EditSurvey() {
 
   useEffect(() => {
     dispatch(getQuestionsBySurveyId(survey_id))
-  }, [dispatch, survey_id, questions])
+  }, [dispatch, survey_id])
 
   return (
     <div className="w-screen h-screen flex justify-center items-start">
@@ -115,10 +115,17 @@ function EditSurvey() {
         </div>
         <h1 className="font-bold text-3xl ">Soruları Düzenle</h1>
         <hr className="border-2 border-black" />
-
+        <div className="flex justify-center">
+          <button
+            className="flex justify-between items-center p-2 m-2 px-2 mx-2 text-white bg-black rounded-md transition ease-in-out delay-150 hover:scale-110 duration-300 cursor-pointer"
+            onClick={() => dispatch(getQuestionsBySurveyId(survey_id))}
+          >
+            Yenile
+          </button>
+        </div>
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-wrap items-center">
-            {questions.length > 0 ? (
+            {questions.length > 0 && !isLoading ? (
               questions.map((question) => <Question key={question.question_id} question={question} />)
             ) : (
               <h1 className="p-2">Bu ankette hiç soru yok.</h1>

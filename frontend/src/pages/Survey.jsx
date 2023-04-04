@@ -2,15 +2,13 @@ import React, { useEffect } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
-import AddIcon from '@mui/icons-material/Add'
-import TextField from '@mui/material/TextField'
-
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 
 import QuestionCard from '../components/QuestionCard'
 import { getQuestionsBySurveyId } from '../features/questions/questionSlice'
 import { getSurveyById } from '../features/surveys/surveySlice'
+import { postAnswer, reset } from '../features/answers/answerSlice'
 
 function Survey() {
   const navigate = useNavigate()
@@ -19,14 +17,33 @@ function Survey() {
 
   const { questions } = useSelector((state) => state.question)
   const { survey } = useSelector((state) => state.survey)
+  const { surveyAnswers, isSuccess } = useSelector((state) => state.answer)
 
   useEffect(() => {
     dispatch(getQuestionsBySurveyId(params.id))
     dispatch(getSurveyById(params.id))
   }, [dispatch])
 
+  const filteredAnswers = removeDuplicatesByKey([...surveyAnswers], 'question_id')
+
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    filteredAnswers.forEach((answer) => {
+      dispatch(postAnswer(answer))
+    })
+
+    if (isSuccess) {
+      dispatch(reset())
+      navigate('/')
+    }
+  }
+
+  function removeDuplicatesByKey(arr, key) {
+    return arr
+      .reverse()
+      .filter((obj, index, self) => index === self.findIndex((t) => t[key] === obj[key]))
+      .reverse()
   }
 
   return (
@@ -39,7 +56,7 @@ function Survey() {
         <hr className="border-2 border-black" />
 
         <div className="flex flex-col justify-center items-center">
-          <form>
+          <form onSubmit={handleSubmit}>
             {questions.map((question) => (
               <QuestionCard question={question} />
             ))}

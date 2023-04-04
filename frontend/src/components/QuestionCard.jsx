@@ -6,17 +6,25 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 
-import { addAnswer } from '../features/answers/answerSlice'
 import { useSelector, useDispatch } from 'react-redux'
+import { postAnswer } from '../features/answers/answerSlice'
+import { pushSurveyAnswers } from '../features/answers/answerSlice'
 
 function QuestionCard({ question }) {
   const dispatch = useDispatch()
+  const { user } = useSelector((state) => state.auth)
 
-  const [value, setValue] = useState('')
+  const [answer, setAnswer] = useState('')
 
   const handleChange = (event) => {
-    setValue(event.target.value)
-    dispatch(addAnswer({ questionId: question.question_id, answer: event.target.value }))
+    setAnswer(event.target.value)
+    dispatch(
+      pushSurveyAnswers({
+        question_id: question.question_id,
+        answer: event.target.value,
+        user_id: user.id
+      })
+    )
   }
 
   return (
@@ -25,7 +33,7 @@ function QuestionCard({ question }) {
         <FormLabel id="demo-radio-buttons-group-label">
           <span className="font-bold">{question.question}</span>
         </FormLabel>
-        <RadioGroup row aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
+        <RadioGroup row onChange={handleChange} aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
           <FormControlLabel value="1" control={<Radio />} label="Kesinlikle Katılmıyorum" />
           <FormControlLabel value="2" control={<Radio />} label="Katılmıyorum" />
           <FormControlLabel value="3" control={<Radio />} label="Kısmen Katılıyorum" />
@@ -33,6 +41,9 @@ function QuestionCard({ question }) {
           <FormControlLabel value="5" control={<Radio />} label="Kesinlikle Katılıyorum" />
         </RadioGroup>
       </FormControl>
+      <div className="flex justify-end items-center">
+        <p>SORU ID: {question.question_id}</p>
+      </div>
     </div>
   )
 }
