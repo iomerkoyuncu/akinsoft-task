@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3001/api/answers"
+const API_URL = "https://anket-yonetim-sistemi.onrender.com/api/answers"
 
 // Post a answer
 const postAnswer = async (answerData, token) => {
