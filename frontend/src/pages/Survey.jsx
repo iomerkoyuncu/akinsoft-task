@@ -45,7 +45,7 @@ function Survey() {
   }
 
   return (
-    <div className="w-screen h-screen flex justify-center items-start">
+    <div className="w-screen flex justify-center items-start">
       <div className="w-4/5 ">
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-2xl ">{survey.title}</h1>

@@ -34,7 +34,7 @@ function MySurveys() {
     return <Spinner />
   } else {
     return (
-      <div className="w-screen h-screen flex justify-center items-start">
+      <div className="w-screen flex justify-center items-start">
         <div className="w-4/5 ">
           <h1 className="font-bold text-3xl text-center">Cevaplarım</h1>
           <hr className="border-2 border-black" />
