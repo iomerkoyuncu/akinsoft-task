@@ -160,6 +160,15 @@ function Header() {
                 <ListItemText primary="Oluşturduğum Anketler" />
               </ListItemButton>
             </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  navigate('/my-answers')
+                }}
+              >
+                <ListItemText primary="Cevaplarım" />
+              </ListItemButton>
+            </ListItem>
 
             <ListItem disablePadding>
               <ListItemButton onClick={onLogout}>

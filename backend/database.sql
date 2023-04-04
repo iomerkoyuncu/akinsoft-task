@@ -16,7 +16,7 @@ CREATE TABLE  surveys (
     description VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE  questions (
@@ -25,7 +25,7 @@ CREATE TABLE  questions (
     question VARCHAR(255) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (survey_id) REFERENCES surveys(survey_id)
+    FOREIGN KEY (survey_id) REFERENCES surveys(survey_id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_answers (

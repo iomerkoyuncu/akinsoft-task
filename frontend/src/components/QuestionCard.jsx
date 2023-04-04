@@ -34,11 +34,11 @@ function QuestionCard({ question }) {
           <span className="font-bold">{question.question}</span>
         </FormLabel>
         <RadioGroup row onChange={handleChange} aria-labelledby="demo-radio-buttons-group-label" name="radio-buttons-group">
-          <FormControlLabel value="1" control={<Radio />} label="Kesinlikle Katılmıyorum" />
-          <FormControlLabel value="2" control={<Radio />} label="Katılmıyorum" />
-          <FormControlLabel value="3" control={<Radio />} label="Kısmen Katılıyorum" />
-          <FormControlLabel value="4" control={<Radio />} label="Katılıyorum" />
-          <FormControlLabel value="5" control={<Radio />} label="Kesinlikle Katılıyorum" />
+          <FormControlLabel value="Kesinlikle Katılmıyorum" control={<Radio />} label="Kesinlikle Katılmıyorum" />
+          <FormControlLabel value="Katılmıyorum" control={<Radio />} label="Katılmıyorum" />
+          <FormControlLabel value="Kısmen Katılıyorum" control={<Radio />} label="Kısmen Katılıyorum" />
+          <FormControlLabel value="Katılıyorum" control={<Radio />} label="Katılıyorum" />
+          <FormControlLabel value="Kesinlikle Katılıyorum" control={<Radio />} label="Kesinlikle Katılıyorum" />
         </RadioGroup>
       </FormControl>
       <div className="flex justify-end items-center">
