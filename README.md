@@ -2,6 +2,18 @@
 
 [Live Version](https://anket-yonetim-sistemi-iomerkoyuncu.netlify.app/)
 
+![Screenshot](frontend/src/assets/ss-1.png)
+
+![Screenshot](frontend/src/assets/ss-2.png)
+
+![Screenshot](frontend/src/assets/ss-3.png)
+
+![Screenshot](frontend/src/assets/ss-4.png)
+
+![Screenshot](frontend/src/assets/ss-5.png)
+
+![Screenshot](frontend/src/assets/ss-6.png)
+
 -
 
 API: https://anket-yonetim-sistemi.onrender.com/
