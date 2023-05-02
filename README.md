@@ -1,4 +1,4 @@
-# Anket Yönetim Sistemi
+# SurveyApp - Anket Yönetim Sistemi
 
 [Live Version](https://anket-yonetim-sistemi-iomerkoyuncu.netlify.app/)
 
