@@ -9,7 +9,7 @@ function Footer() {
       <h4 className="">ismetomerkoyuncu</h4>
       <div className="flex justify-between">
         <h4 className="p-[5px]">2023</h4>
-        <a href="https://github.com/iomerkoyuncu/anket-yonetim-sistemi">
+        <a href="https://github.com/iomerkoyuncu/survey-app">
           <IconButton
             sx={{
               padding: '5px'
